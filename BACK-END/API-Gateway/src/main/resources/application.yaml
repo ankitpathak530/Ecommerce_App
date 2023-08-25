@@ -1,0 +1,36 @@
+server:
+  port: 8443
+
+
+spring:
+  application:
+    name: Api-Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Product-Service
+          uri: lb://Product-Service
+          predicates:
+            - Path=/product/**
+
+        - id: CartItem-Service
+          uri: lb://CartItem-Service
+          predicates:
+            - Path=/cartItem/**
+
+        - id: ShoppingCart-Service
+          uri: lb://ShoppingCart-Service
+          predicates:
+            - Path=/shoppingCart/**
+
+
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost

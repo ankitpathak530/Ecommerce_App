@@ -1,0 +1,11 @@
+server:
+  port: 0
+
+
+spring:
+  application:
+    name: ShoppingCart-Service
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8085/

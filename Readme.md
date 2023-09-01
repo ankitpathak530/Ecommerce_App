@@ -58,7 +58,6 @@ To get started, clone the Ecommerce App from the GitHub repository:
 git clone https://github.com/ankitpathak530/Ecommerce_App.git
 ```
 
-I apologize for the misunderstanding. Thank you for clarifying the usage of your provided GitHub repository URL for users to create their own configurations. Here's the corrected Step 2:
 
 ## Step 2: Configure the Database and Centralized Configuration
 

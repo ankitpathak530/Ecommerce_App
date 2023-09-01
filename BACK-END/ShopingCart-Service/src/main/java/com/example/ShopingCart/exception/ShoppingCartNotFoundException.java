@@ -1,11 +1,13 @@
 package com.example.ShopingCart.exception;
 
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ShoppingCartNotFoundException extends RuntimeException{
 
     private String message;

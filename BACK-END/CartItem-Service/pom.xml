@@ -30,27 +30,6 @@
 				<artifactId>spring-boot-starter-actuator</artifactId>
 			</dependency>
 
-			<!-- Micrometer Registry Prometheus -->
-			<dependency>
-				<groupId>io.micrometer</groupId>
-				<artifactId>micrometer-registry-prometheus</artifactId>
-				<version>1.11.3</version>
-			</dependency>
-
-			<!-- Micrometer Tracing Bridge Brave -->
-			<dependency>
-				<groupId>io.micrometer</groupId>
-				<artifactId>micrometer-tracing-bridge-brave</artifactId>
-				<version>1.1.4</version>
-			</dependency>
-
-			<!-- Zipkin Reporter Brave -->
-			<dependency>
-				<groupId>io.zipkin.reporter2</groupId>
-				<artifactId>zipkin-reporter-brave</artifactId>
-				<version>2.16.4</version>
-			</dependency>
-
 
 
 

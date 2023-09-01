@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +35,18 @@ public class ProductController {
          if(product == null)
              return new ResponseEntity<>(null, HttpStatusCode.valueOf(404));
          return new ResponseEntity<>(product, HttpStatusCode.valueOf(200));
+    }
+
+    @PostMapping("/create-product")
+    public ResponseEntity<?> createProduct(@RequestBody Product product){
+        this.productService.createProduct(product);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(201));
+    }
+
+    @PostMapping("/create-products")
+    public ResponseEntity<?> createProducts(@RequestBody List<Product> products){
+        this.productService.createProducts(products);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }
 
 

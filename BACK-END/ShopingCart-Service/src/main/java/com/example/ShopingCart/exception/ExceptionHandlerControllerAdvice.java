@@ -25,6 +25,24 @@ public class ExceptionHandlerControllerAdvice {
     }
 
 
+
+
+    @ExceptionHandler(value = {InvalidShoppingCartException.class})
+    public ResponseEntity<Object> invalidShoppingCartException(InvalidShoppingCartException ex) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDate.now());
+        body.put("message", "Invalid ShoppingCart Input");
+        body.put("Description:", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+
+
+
+
+
     @ExceptionHandler(value = {CartItemNotFoundException.class})
     public ResponseEntity<Object> handleValidationException(CartItemNotFoundException ex) {
 

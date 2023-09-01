@@ -2,6 +2,7 @@ package com.example.ShopingCart.service;
 
 import com.example.ShopingCart.entity.ShoppingCart;
 import com.example.ShopingCart.exception.CartItemNotFoundException;
+import com.example.ShopingCart.exception.InvalidShoppingCartException;
 import com.example.ShopingCart.exception.ShoppingCartNotFoundException;
 import com.example.ShopingCart.feign.CartItemClient;
 import com.example.ShopingCart.model.CartItem;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -43,8 +45,13 @@ public class ShoppingCartService {
         ResponseEntity<CartItem> newCartRes = cartItemClient.addCartItem(cartItem);
         if(newCartRes.getStatusCode().is2xxSuccessful()){
             // Add the cart item to the shopping cart and save the updated cart
-            shoppingCart.addCartItem(newCartRes.getBody().getCartItemId());
-            shoppingCartRepository.save(shoppingCart);
+            //if this cartItemIds is already added there and client has requested only few update in cart item then don't require to save again with same cart item ids
+            //if this cartItemIds is new then add this carItem ids to shopping cart and save.
+            if(!shoppingCart.getCartItemIds().contains(newCartRes.getBody().getCartItemId())){
+                shoppingCart.addCartItem(newCartRes.getBody().getCartItemId());
+                shoppingCartRepository.save(shoppingCart);
+            }
+
         }else{
             throw new RuntimeException("CartItem not saved.");
         }
@@ -57,6 +64,15 @@ public class ShoppingCartService {
     public void createShoppingCart(ShoppingCart shoppingCart) {
         log.info("ShoppingCartService createShoppingCart started...");
         // Save the provided shopping cart and handle the case where saving fails
+        if(shoppingCart.getShoppingCartName() == null || shoppingCart.getShoppingCartName().trim().equals("")){
+            throw new InvalidShoppingCartException("Shopping Cart name is invalid.");
+        }
+
+        Optional<ShoppingCart> byShoppingCartName = this.shoppingCartRepository.findByShoppingCartName(shoppingCart.getShoppingCartName());
+        if(!byShoppingCartName.isEmpty()){
+            throw new InvalidShoppingCartException("Shopping Cart already created with this name. Try different name");
+        }
+
         this.shoppingCartRepository.save(shoppingCart);
         log.info("ShoppingCartService createShoppingCart completed.");
     }

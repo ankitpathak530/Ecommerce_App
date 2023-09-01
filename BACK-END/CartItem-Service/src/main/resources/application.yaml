@@ -9,17 +9,3 @@ spring:
     active: dev
   config:
     import: configserver:http://localhost:8085/
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-  endpoints:
-    web:
-      exposure:
-        include:
-          - *
-  endpoint:
-    health:
-      show-details: ALWAYS
-      logging:

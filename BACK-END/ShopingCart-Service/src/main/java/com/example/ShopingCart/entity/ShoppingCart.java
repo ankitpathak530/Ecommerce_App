@@ -18,6 +18,7 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shoppingCartId;
+    private String shoppingCartName;
     private Long userId;
 
     @ElementCollection

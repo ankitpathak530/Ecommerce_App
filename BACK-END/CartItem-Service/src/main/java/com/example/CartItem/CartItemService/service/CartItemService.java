@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class CartItemService {
@@ -22,10 +24,20 @@ public class CartItemService {
     @Transactional
     public CartItem createCartItem(CartItem cartItem) {
         log.info("CartItemService createCartItem started...");
-        // Save the cart item
-        CartItem savedCartItem = cartItemRepository.save(cartItem);
-        log.info("CartItemService createCartItem completed.");
-        return savedCartItem;
+        Optional<CartItem> byProductId = cartItemRepository.findByProductIdAndShoppingCartId(cartItem.getProductId(), cartItem.getShoppingCartId());
+        if(byProductId.isEmpty()){
+            //save new cart item
+            CartItem newSavedCartItem = cartItemRepository.save(cartItem);
+            log.info("CartItemService createCartItem completed.");
+            return newSavedCartItem;
+        }
+        else{
+            //update the cart item quantity do not create new one
+            CartItem cartItem1 = byProductId.get();
+            cartItem1.setQuantity(cartItem.getQuantity());
+            log.info("CartItemService createCartItem completed.");
+            return this.cartItemRepository.save(cartItem1);
+        }
     }
 
 

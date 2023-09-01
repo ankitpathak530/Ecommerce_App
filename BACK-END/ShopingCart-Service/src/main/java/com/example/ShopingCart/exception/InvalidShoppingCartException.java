@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CartItemNotFoundException extends RuntimeException{
+public class InvalidShoppingCartException extends RuntimeException{
 
     private String message;
 }
